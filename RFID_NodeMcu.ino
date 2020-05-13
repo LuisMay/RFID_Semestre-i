@@ -4,18 +4,22 @@
 #include <BLEServer.h>
 
 //Configuración internet//
-const char* ssid = "SSID"; // Rellena con el nombre de tu red WiFi
-const char* password = "Contraseña"; // Rellena con la contraseña de tu red WiFi
- 
+const char* ssid = "INFINITUM15C4_2.4"; // Rellena con el nombre de tu red WiFi
+const char* password = "LvyPTDBn2L"; // Rellena con la contraseña de tu red WiFi
+
+//ESTA PARTE NOS LA TIENE QUE DAR SOFTWARE
+//
 const char* host = "api.tanque.com";
 const char* apiKey = " clave API "; 
 
 // Huella digital del certificado del servidor 
+
+//ESTA PARTE TIENE QUE NOTIFICARSE A SOFTWARE Y REDES/SEGURIDAD -PROBABLEMENTE HAYA UNA GRATIS //certificado - cifrado
 const char * fingerprint = "a9 1f b9 fe 35 b8 38 b9 54 67 e7 34 52 8a 24 d4 17 29 fa 32";
 //----------------------//
 
 //Variables para lector//
-int tanqueID=0;
+int tanqueID=0;  //SOLO ACEPTA VALROES DE 96 BITS  // 12 letras maximo //
 //---------------------//
 
 //Serial
@@ -56,7 +60,9 @@ void loop() {
   Serial.print("connecting to ");
   Serial.println(host);
 
-  /* 
+  /*   //AQUI VA LA PARTE DE HTTPS
+   *    
+   *    
   // Creamos el cliente
   WiFiClientSecure client;
   const int httpPort = 443; // Puerto HTTPS
@@ -74,14 +80,14 @@ void loop() {
   }
   */
 
-  // Creamos la URL para la petición
+  // Creamos la URL para la petición //LA DA BACKEND
   
   String url = "/api/";
   url += apiKey;
   url += tanqueID;
   url += ".json";
 
- //Enviamos por bluetooth
+ //Enviamos por bluetooth //ON HOLD- YA NO NECESARIA
   s.write(123);
   Serial.print("URL de la petición: https://");
   Serial.print(host);
@@ -90,7 +96,7 @@ void loop() {
   Serial.println(url);
 
   /*
-  // Enviamos la petición
+  // Enviamos la petición  // PROBAR CON BACKEND
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
                 "Host: " + host + "\r\n" +
                 "Connection: close\r\n\r\n");
@@ -121,6 +127,8 @@ int obtainingID(){
   Serial.print(tanqueID);
   Serial.println();
   while (tanqueID == 0){
+
+  //UART INTEGRAR 
 
   
   }
