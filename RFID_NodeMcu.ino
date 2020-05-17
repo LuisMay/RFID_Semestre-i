@@ -6,9 +6,13 @@
 //Put your SSID & Password//
 const char* ssid = "INFINITUM15C4_2.4"; // Rellena con el nombre de tu red WiFi
 const char* password = "LvyPTDBn2L"; // Rellena con la contraseña de tu red WiFi
- //IP 192.168.1.67   192.168.1.66
-const char* host = "192.168.1.66";
+// IP 192.168.1.67   192.168.1.66
+// const char* host = "192.168.1.66";
+IPAddress ip(192, 168, 0, 107); //set static ip
+IPAddress gateway(192, 168, 0, 1); //set getteway
+IPAddress subnet(255, 255, 255, 0);//set subnet
 
+WiFiServer server(3000);
 
 //Variables para lector//
 String content = "A01240483";
@@ -26,7 +30,9 @@ void setup() {
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
-  WiFi.mode(WIFI_STA); 
+ 
+  WiFi.mode(WIFI_STA);
+  WiFi.config(ip, gateway, subnet);
   WiFi.begin(ssid, password);
 
   // Esperamos a que estemos conectados a la red WiFi
@@ -67,10 +73,10 @@ void loop() {
 void Core () {
 
   
-   if (client.connect(host,3000))     // "184.106.153.149" or api.thingspeak.com
+   if (client.connect(host,WiFiServer))     // "184.106.153.149" or api.thingspeak.com
    { 
   HTTPClient http;
-  http.begin("http://192.168.1.66:3000");
+  http.begin("http://192.168.1.66:" + WiFiServer);
   http.addHeader("Content-Type", "text/plain");
   int  httpCode=http.POST(content);
     unsigned long timeout = millis();
